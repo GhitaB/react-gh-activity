@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.item {
+  margin-bottom: 1em;
+}
+
+.App form {
+  margin-bottom: 2em;
+}
