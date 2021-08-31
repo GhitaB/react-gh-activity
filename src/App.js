@@ -5,12 +5,12 @@ function ItemsList(props) {
   const itemsList = props.items[0];
   console.log(props.items[1]);
   const items = itemsList.map((item) =>
-    <li key={item.toString()}>
+    <div key={item.toString()}>
       {item}
-    </li>
+    </div>
   );
   return (
-    <ul>{items}</ul>
+    <div>{items}</div>
   );
 }
 
@@ -66,7 +66,9 @@ function App() {
 
   return (
     <div className="App">
-      <ItemsList items={events} />
+      <div className="container">
+        <ItemsList items={events} />
+      </div>
     </div>
   );
 }
