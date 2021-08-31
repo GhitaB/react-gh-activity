@@ -2,10 +2,11 @@ import './App.css';
 import React, { useEffect, useState } from "react";
 
 function ItemsList(props) {
-  const itemsList = props.items;
+  const itemsList = props.items[0];
+  console.log(props.items[1]);
   const items = itemsList.map((item) =>
     <li key={item.toString()}>
-      TEST: {item}
+      {item}
     </li>
   );
   return (
@@ -16,7 +17,7 @@ function ItemsList(props) {
 window.hasData = false;
 
 function App() {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([[],[]]);
 
   useEffect(() => {
     if(!window.hasData) {
@@ -45,12 +46,19 @@ function App() {
               return item.type === "PushEvent"
             });
             var prepared = [];
+            var eventsDetails = [];
             for(var evt of filtered) {
-              prepared.push(evt.id);
+              prepared.push(`${evt.created_at}: ${evt.repo.name} - ${evt.id} - ${evt.payload.commits[0].message}`);
+              eventsDetails.push({
+                created: evt.created_at,
+                repo: evt.repo_name,
+                id: evt.id,
+                commits: evt.payload.commits
+              });
             }
-            setEvents(prepared);
+
+            setEvents([prepared, eventsDetails]);
             window.hasData = true;
-            console.log("Done");
           }
         );
     }
@@ -58,7 +66,6 @@ function App() {
 
   return (
     <div className="App">
-      <p>TEST: {events}</p>
       <ItemsList items={events} />
     </div>
   );
