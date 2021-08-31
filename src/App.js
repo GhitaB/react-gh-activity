@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";   // JS Modules (ES Modules) import
 import GitHub from 'github-api';
 import { DateTime } from 'luxon';
+import parseLink from 'parse-link-header';
 
 import './App.css';
 
@@ -88,6 +89,8 @@ const prepareShowEvents = (entries) => {
 function App() {
   const [entries, setEntries] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState(['PushEvent']);
+  const [currentUrl, setCurrentUrl] = React.useState(`https://api.github.com/users/${config.username}/events/public`);
+  const [nextUrl, setNextUrl] = React.useState();
   console.log(entries);
 
   useEffect(() => {
@@ -97,12 +100,20 @@ function App() {
     const me = gh.getUser();
     // console.log(me);
 
-    fetch(`https://api.github.com/users/${config.username}/events/public`, {
+    fetch(currentUrl, {
       method: "GET",
       headers: {
         Authorization: `token ${me.__auth.token} `
       }
     })
+      .then(res => {
+        console.log('res', );
+        const links = parseLink(res.headers.get('link'));
+        if (links.next && links.next.url !== currentUrl) {
+          setNextUrl(links.next.url)
+        }
+        return res
+      })
       .then(res => res.json())
       .then(
         (result) => {
@@ -110,7 +121,7 @@ function App() {
           setEntries(result);
         }
       );
-  }, []);
+  }, [currentUrl]);
 
   // const { events = [], eventsDetails = []} = prepareShowEvents(entries);
   // console.log({events, eventsDetails});
@@ -135,6 +146,7 @@ function App() {
         </form>
 
         <ItemsList entries={entries.filter(e => filteredEvents.includes(e.type))} />
+        <button onClick={() => setCurrentUrl(nextUrl)}>Next</button>
       </div>
     </div>
   );
