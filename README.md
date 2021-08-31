@@ -1,3 +1,11 @@
+# Config
+
+Create `.env` file:
+```
+REACT_APP_USERNAME = yourGitHubUsername
+REACT_APP_TOKEN = youtGitHubToken
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
