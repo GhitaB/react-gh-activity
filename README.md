@@ -3,7 +3,7 @@
 Create `.env` file:
 ```
 REACT_APP_USERNAME = yourGitHubUsername
-REACT_APP_TOKEN = youtGitHubToken
+REACT_APP_TOKEN = yourGitHubToken
 ```
 
 # Getting Started with Create React App
