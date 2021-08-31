@@ -14,6 +14,22 @@ function ItemsList(props) {
   );
 }
 
+                // created: evt.created_at,
+                // repo: evt.repo_name,
+                // id: evt.id,
+                // commits: evt.payload.commits
+function ItemsList2(props) {
+  const itemsList = props.items[1];
+  const items = itemsList.map((item) =>
+    <div key={item.toString()} className="item">
+      <span className="created">{item.created}</span>
+    </div>
+  );
+  return (
+    <div className="items">{items}</div>
+  );
+}
+
 window.hasData = false;
 
 function App() {
@@ -67,7 +83,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <ItemsList items={events} />
+        <ItemsList2 items={events} />
       </div>
     </div>
   );
